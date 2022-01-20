@@ -1,5 +1,16 @@
+import { Express } from "express";
+import express from "express";
+
 export class App {
-    public start(): void {
-        // Do nothing        
+
+    readonly express : Express;
+    
+    constructor(){
+        this.express = express();
+    }
+
+
+    public build(): Express {
+        return this.express;
     }
 }

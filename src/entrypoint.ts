@@ -1,3 +1,8 @@
 import { App } from "./Application/App"
+import express from "express";
+import router  from "./Bookings/router";
 
-new App().start();
+const expr = new App().build();
+expr.use(express.json())
+expr.use("/bookings", router);
+expr.listen(3000);
