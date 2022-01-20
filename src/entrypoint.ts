@@ -5,4 +5,4 @@ import router  from "./Bookings/router";
 const expr = new App().build();
 expr.use(express.json())
 expr.use("/bookings", router);
-expr.listen(5000);
+expr.listen(process.env.PORT);
