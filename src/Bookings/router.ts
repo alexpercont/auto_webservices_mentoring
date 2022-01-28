@@ -2,10 +2,23 @@ import express from "express";
 import { data } from "../Data/data";
 import { Request, Response, NextFunction } from 'express';
 
+
+function filterbyName(e: any, i: any, a: any){
+    return e.name.includes()
+}
+
 const router = express.Router();
 router.get('/', function(req: Request, res: Response, next: NextFunction) {
-    console.log("Requesting all data.")
-    res.json(data);
+    const name = req.query.name;
+    if (!name){
+        console.log("Requesting all data.")
+        res.json(data);
+    } else {
+        console.log("Requesting all data by name " + name);
+        res.json(data.filter((e: any, i:any, a: any) => {
+            return e.name.includes(name);
+        }));
+    }
 })
 
 router.post('/', function(req: Request, res: Response, next: NextFunction){
