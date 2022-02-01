@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "683ca706-2b8f-4ddd-99e9-83c0b9cd0ae3",
+		"name": "Webservices mentoring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ver reservaciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nodejs-rest-sample.herokuapp.com/bookings",
+					"protocol": "https",
+					"host": [
+						"nodejs-rest-sample",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"bookings"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver reservaciones por nombre",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.collectionVariables.set(\"variable_uno\", \r",
+							"    pm.collectionVariables.get(\"variable_uno\") + 1);\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Filtro funciona correctamente.\", function(){\r",
+							"    const nombreBusqueda = pm.variables.get(\"nombre_busqueda\");\r",
+							"    const data = pm.response.json();\r",
+							"    for (var i = 0; i < data.length; i++){\r",
+							"        pm.expect(data[i].name.includes(nombreBusqueda)).is.true;\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nodejs-rest-sample.herokuapp.com/bookings?name={{nombre_busqueda}}",
+					"protocol": "https",
+					"host": [
+						"nodejs-rest-sample",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"bookings"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{nombre_busqueda}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear nueva reservación con información válida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de respuesta es 201.\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"20\",\r\n    \"name\": \"Lalo Landas \",\r\n    \"email\": \"lalo_landas@hotmail.com\",\r\n    \"date\": \"2022-02-15\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nodejs-rest-sample.herokuapp.com/bookings",
+					"protocol": "https",
+					"host": [
+						"nodejs-rest-sample",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear nueva reservación sin información",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de respuesta es 400.\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://nodejs-rest-sample.herokuapp.com/bookings",
+					"protocol": "https",
+					"host": [
+						"nodejs-rest-sample",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "nombre_busqueda",
+			"value": "Sol",
+			"type": "default"
+		},
+		{
+			"key": "variable_uno",
+			"value": "3",
+			"type": "default"
+		}
+	]
+}
